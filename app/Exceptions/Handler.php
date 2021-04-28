@@ -2,7 +2,8 @@
 
 namespace App\Exceptions;
 
-use App\Traits\ResponseTrait;
+use App\Traits\ApiResponseTrait;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -11,7 +12,7 @@ use Throwable;
 
 class Handler extends ExceptionHandler
 {
-    use ResponseTrait;
+    use ApiResponseTrait;
     /**
      * A list of the exception types that are not reported.
      *
@@ -55,18 +56,17 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
+
+        // dd($exception->getCode());
         // Execpciones de los from request
         if ($exception instanceof ValidationException) {            
-            return  $this->responseTrait([
-                $exception->errors(),
-                'code' =>  $exception->status
-            ]);
+            return  $this->responseApi($exception->errors(),'error','Error de validación',$exception->status);
         }else if($exception instanceof NotFoundHttpException){
             // La url no existe
-            return  $this->responseTrait([
-                'messege' => "El recurso no existe.",
-                'code' =>  $this->not_found
-            ]);
+            return  $this->responseApi([],'error',"El recurso no existe.", $this->not_found);
+        }else if($exception instanceof AuthorizationException){
+            // La url no existe
+            return  $this->responseApi([],'error',"No autorizado", $this->not_authorized);
         }
 
         return parent::render($request, $exception);
