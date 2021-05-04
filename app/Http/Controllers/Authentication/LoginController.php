@@ -11,9 +11,29 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
+/**
+* @OA\Info(title="API Usuarios", version="1.0")
+*
+* @OA\Server(url="http://lessons-laravel.test/")
+*/
+
 class LoginController extends Controller
 {
     use ApiResponseTrait;
+    /**
+    * @OA\Post(
+    *     path="/api/authentication/login",
+    *     summary="Iniciar sesión",
+    *     @OA\Response(
+    *         response=200,
+    *         description="Retorna la infomacion del token para las proximas peticiones."
+    *     ),
+    *     @OA\Response(
+    *         response="default",
+    *         description="Ha ocurrido un error."
+    *     )
+    * )
+    */
     public function login(LoginRequest $request){
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
             $token = Auth::user()->createToken(env('NAME_TOKEN', 'course'));
