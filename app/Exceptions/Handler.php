@@ -57,7 +57,7 @@ class Handler extends ExceptionHandler
     public function render($request, Throwable $exception)
     {
 
-        // dd($exception->getCode());
+        // dd($exception->errors());
         // Execpciones de los from request
         if ($exception instanceof ValidationException) {            
             return  $this->responseApi($exception->errors(),'error','Error de validación',$exception->status);
