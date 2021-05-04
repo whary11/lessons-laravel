@@ -21,7 +21,7 @@ class ProductController extends Controller
             if(Product::whereName($request->name)->exists()){
                 throw new Exception("El producto ya existe.", 1);
             }
-            $image_url = Storage::put("public/products", $request->file('image'));
+            $image_url = Storage::disk("public")->put("products", $request->file('image'));
             $data = [
                 'name' => $request->name,
                 'description' => $request->description,
