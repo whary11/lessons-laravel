@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\Product;
 use App\Models\Status;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
@@ -204,4 +205,46 @@ class ProductControllerTest extends TestCase
         ]);
         $response->assertStatus(200);
     }
+
+
+     /**
+     * LIstar productos
+     *
+     * @return void
+     */
+    public function test_list_products()
+    {
+
+        Status::factory()->create();
+        Storage::fake('products');
+        // Product::factory()->create();
+
+
+        $response = $this->get('/api/product/get');
+        
+        // dump($response->getData(true));
+        $response->assertStatus(200);
+        $response->assertJsonStructure([
+            "status",
+            "message",
+            "data" => [
+                '*' => [
+                    "id",
+                    "name",
+                    "description",
+                    "image_url",
+                    "price",
+                    "slug",
+                    "stock",
+                    "status_id",
+                    "created_at",
+                    "updated_at"
+                ]
+            ]
+        ]);
+    }
+
+
+
+
 }

@@ -50,4 +50,8 @@ class ProductController extends Controller
             ],'error');
         }
     }
+
+    public function get(){
+        return $this->responseApi(Product::all());
+    }
 }
