@@ -83,7 +83,6 @@ class ProductControllerTest extends TestCase
             "status_id" => 1
         ]);
 
-        dump($response->getData(true));
 
 
         $response->assertJsonStructure([
