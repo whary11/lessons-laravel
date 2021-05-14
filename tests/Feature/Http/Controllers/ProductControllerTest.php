@@ -206,6 +206,21 @@ class ProductControllerTest extends TestCase
         $response->assertStatus(200);
     }
 
+    /**
+     * LIstar productos
+     *
+     * @return void
+     */
+    public function test_validate_params_list_products()
+    {
+        Status::factory()->create();
+        Storage::fake('products');
+        $response = $this->get('/api/product/get/');
+        $response->assertStatus(404);
+        $response = $this->get('/api/product/get/1');
+        $response->assertStatus(404);
+    }
+
 
      /**
      * LIstar productos
@@ -220,7 +235,7 @@ class ProductControllerTest extends TestCase
         // Product::factory()->create();
 
 
-        $response = $this->get('/api/product/get');
+        $response = $this->get('/api/product/get/1/2');
         
         // dump($response->getData(true));
         $response->assertStatus(200);

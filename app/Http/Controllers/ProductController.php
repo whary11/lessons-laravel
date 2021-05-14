@@ -51,7 +51,8 @@ class ProductController extends Controller
         }
     }
 
-    public function get(){
-        return $this->responseApi(Product::all());
+    public function get($page,$limit){
+        $products = Product::offset(($page - 1) * $limit)->take($limit)->get();
+        return $this->responseApi($products, 'success', 'Productos consultados satisfatoriamente.');
     }
 }

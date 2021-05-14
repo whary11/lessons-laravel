@@ -35,5 +35,5 @@ Route::group(['prefix' => 'authentication'], function(){
 // Producto
 Route::group(['prefix' => 'product'], function(){
     Route::post('create', [ProductController::class, 'create']);
-    Route::get('get', [ProductController::class, 'get']);
+    Route::get('get/{page}/{limit}', [ProductController::class, 'get']);
 });
