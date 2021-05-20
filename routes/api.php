@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Authentication\LoginController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -36,4 +37,11 @@ Route::group(['prefix' => 'authentication'], function(){
 Route::group(['prefix' => 'product'], function(){
     Route::post('create', [ProductController::class, 'create']);
     Route::get('get/{page}/{limit}', [ProductController::class, 'get']);
+});
+
+
+// Order
+Route::group(['prefix' => 'orders'], function(){
+    Route::post('create', [OrderController::class, 'create']);
+    // Route::get('get/{page}/{limit}', [ProductController::class, 'get']);
 });
