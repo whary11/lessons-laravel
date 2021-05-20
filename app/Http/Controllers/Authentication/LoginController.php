@@ -30,16 +30,5 @@ class LoginController extends Controller
     }
 
 
-    public function register(RegisterRequest $request){
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-        $token = $user->createToken(env('NAME_TOKEN', 'course'))->plainTextToken;
-        return $this->responseApi([
-            'access_token' => $token,
-            'token_type' => 'Bearer',
-        ],'success','Usuario registrado, disffruta la plataforma.');
-    }
+    
 }
