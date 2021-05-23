@@ -29,7 +29,9 @@ class OrderRequest extends FormRequest
             'total' => ['required'],
             'tax' => ['required'],
             'shipping_value' => ['required'],
-            'delivery_date' => 'date_format:Y-m-d|after_or_equal:'.$now.'|required',
+            'delivery_date' => 'date_format:Y-m-d H:i:s|after_or_equal:'.$now.'|required',
+            'user_id' => ['required','integer','exists:users,id'],
+            'status_id' => ['required','integer','exists:statuses,id'],
         ];
     }
 }

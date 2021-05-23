@@ -2,12 +2,15 @@
 
 namespace Tests\Feature\Http\Controllers;
 
+use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
 class OrderControllerTest extends TestCase
 {
+    use RefreshDatabase;
     /**
      * Validar que el total sea reuqerido
      *
@@ -114,8 +117,48 @@ class OrderControllerTest extends TestCase
             'total' => 12,
             'tax' => 12,
             'shipping_value' => 5000,
-            'delivery_date' => '2021-05-20'
+            'delivery_date' => Carbon::now()->toDateString()
         ]);
-        $response->assertStatus(200);
+        // dump($response->getData(true));
+        $response->assertStatus(422);
+    }
+
+    /**
+     * Validar que el cliente (user_id) exista
+     *
+     * @return void
+     */
+    public function test_validate_exists_user_id()
+    {
+        User::factory()->create();
+        $response = $this->post('/api/orders/create',[
+            'total' => 12,
+            'tax' => 12,
+            'shipping_value' => 5000,
+            'delivery_date' => Carbon::now()->addHour()->toDateTimeString(),
+            'user_id' => 10
+        ]);
+
+        $response->assertStatus(422);
+    }
+
+    /**
+     * Validar que el estado exista
+     *
+     * @return void
+     */
+    public function test_validate_exists_status_id()
+    {
+        User::factory()->create();
+        $response = $this->post('/api/orders/create',[
+            'total' => 12,
+            'tax' => 12,
+            'shipping_value' => 5000,
+            'delivery_date' => Carbon::now()->addHour()->toDateTimeString(),
+            'user_id' => 1,
+            'status_id' => 2
+        ]);
+
+        $response->assertStatus(422);
     }
 }
