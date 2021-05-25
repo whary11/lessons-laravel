@@ -186,7 +186,9 @@ class OrderControllerTest extends TestCase
             'user_id' => 1,
             'status_id' => 1,
             'details' => [
-                'price_with_discount' => 1
+                [
+                    'price_with_discount' => 1
+                ]
             ]
         ]);
 
@@ -194,7 +196,7 @@ class OrderControllerTest extends TestCase
             "status",
             "message",
             "data" => [
-                "details.0.price_with_discount" => []
+                "details.0.price" => []
             ]
         ]);
 
@@ -220,7 +222,9 @@ class OrderControllerTest extends TestCase
             'user_id' => 1,
             'status_id' => 1,
             'details' => [
-                ['price' => 2]
+                [
+                    'price' => 2
+                ]
             ]
         ]);
 
@@ -228,7 +232,7 @@ class OrderControllerTest extends TestCase
             "status",
             "message",
             "data" => [
-                "details.0.price" => []
+                "details.0.price_with_discount" => []
             ]
         ]);
 
