@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Order;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -19,7 +20,7 @@ class StatusSeeder extends Seeder
     public function run()
     {
 
-        DB::table('statuses')->insert(
+        DB::table('statuses')->insert([
             [
                 "name" => "Activo",
                 "description" => "Registro Disponible",
@@ -37,7 +38,13 @@ class StatusSeeder extends Seeder
                 "description" => "Registro Eliminado no disponible",
                 "color" => "#A93226",
                 "model" => "All",
-            ]
-       );
+            ],
+            [
+                "name" => "Recibido",
+                "description" => "Pedido recibido",
+                "color" => "#EAFAF1",
+                "model" => Order::class,
+            ],
+       ]);
     }
 }

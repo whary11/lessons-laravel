@@ -27,7 +27,7 @@ class ProductFactory extends Factory
         $name = $this->faker->paragraph(2);
         return  [
             'name'           => $name,
-            'description'    => $this->faker->paragraph(3),
+            'description'    => $this->faker->paragraph(1),
             'slug'           => Str::slug($name),
             'stock'          => 10,
             'price'          => rand(1000, 100000),

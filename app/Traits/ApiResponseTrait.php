@@ -9,6 +9,7 @@ trait ApiResponseTrait
     public $ok = 200;
     public $not_found = 404;
     public $not_authorized = 401;
+    public $server_error = 500;
 
 
     /**

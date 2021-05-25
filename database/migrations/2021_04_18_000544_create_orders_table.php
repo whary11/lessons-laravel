@@ -21,6 +21,7 @@ class CreateOrdersTable extends Migration
             $table->double('shipping_value', 10)->comment('Valor de envío.');
 
             $table->dateTime('delivery_date');
+            $table->double('order_number',10);
 
             
             $table->foreignId('user_id')->constrained();
