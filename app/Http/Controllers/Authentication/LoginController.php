@@ -20,7 +20,7 @@ class LoginController extends Controller
             return $this->responseApi([
                 'code' => $this->ok,
                 'token' => $token->plainTextToken
-            ]); 
+            ]);
         }else{
             return $this->responseApi([
                 'message' => "Credenciales incorrectas",
@@ -29,6 +29,17 @@ class LoginController extends Controller
         }
     }
 
+    public function register(RegisterRequest $request){
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+        ]);
+        $token = $user->createToken(env('NAME_TOKEN', 'course'))->plainTextToken;
+        return $this->responseApi([
+            'access_token' => $token,
+            'token_type' => 'Bearer',
+        ],'success','Usuario registrado, disffruta la plataforma.');
+    }
 
-    
 }
