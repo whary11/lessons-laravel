@@ -8,25 +8,26 @@ require('./bootstrap');
 
 window.Vue = require('vue').default;
 
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
+/*!
+=========================================================
+* Vue Argon Design System - v1.1.0
+=========================================================
+* Product Page: https://www.creative-tim.com/product/argon-design-system
+* Copyright 2019 Creative Tim (https://www.creative-tim.com)
+* Licensed under MIT (https://github.com/creativetimofficial/argon-design-system/blob/master/LICENSE.md)
+* Coded by www.creative-tim.com
+=========================================================
+* The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+*/
+import Vue from "vue";
+import App from "./App.vue";
+import router from "./utils/router";
+// import Argon from "./plugins/argon-kit";
+import './utils/registerServiceWorker'
 
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
-const app = new Vue({
-    el: '#app',
-});
+Vue.config.productionTip = false;
+// Vue.use(Argon);
+new Vue({
+  router,
+  render: h => h(App)
+}).$mount("#app");

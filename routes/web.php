@@ -17,6 +17,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth'])->name('dashboard');
@@ -40,4 +43,11 @@ Route::group(['middleware' => 'auth'], function () {
 	 Route::get('table-list', function () {return view('pages.tables');})->name('table');
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'App\Http\Controllers\ProfileController@password']);
 });
+
+
+
+Route::get('/gateway/{any?}', function () {
+    return view('starter-argon');
+})->where('any', '^(?!api\/)[\/\w\.-]*');
+
 
