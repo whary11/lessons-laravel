@@ -19,3 +19,6 @@ if ($uri !== '/' && file_exists(__DIR__.'/public'.$uri)) {
 }
 
 require_once __DIR__.'/public/index.php';
+
+// Illuminate\Contracts\Container\BindingResolutionException:
+// Target [domain\Contracts\Service\DefaultServiceContract] is not instantiable while building [application\Lumen\Http\Controllers\DefaultController, application\Services\DefaultService].

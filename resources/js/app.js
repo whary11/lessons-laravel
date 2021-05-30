@@ -3,11 +3,29 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+// Imports
+
+// import click-outside
 
 require('./bootstrap');
+import { createApp } from "vue";
+import App from "./App.vue";
 
-window.Vue = require('vue').default;
 
+import ArgonDashboard from "./plugins/argon-dashboard";
+import "element-plus/lib/theme-chalk/index.css";
+
+
+// Importar directivas
+
+// import clickOutside from './utils/directives/click-ouside'
+// import VueLazyload from 'vue-lazyload'
+
+// /// Directivas
+// // Vue.directive('click-outside',clickOutside, {})
+// Vue.use(VueLazyload, {
+//   error: '/assets/img/default/vuejs-logo.jpeg',
+// })
 /*!
 =========================================================
 * Vue Argon Design System - v1.1.0
@@ -19,15 +37,15 @@ window.Vue = require('vue').default;
 =========================================================
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 */
-import Vue from "vue";
-import App from "./App.vue";
+// import Vue from "vue";
 import router from "./utils/router";
-// import Argon from "./plugins/argon-kit";
 import './utils/registerServiceWorker'
+import "element-plus/lib/theme-chalk/index.css"
 
-Vue.config.productionTip = false;
-// Vue.use(Argon);
-new Vue({
-  router,
-  render: h => h(App)
-}).$mount("#app");
+
+
+
+const appInstance = createApp(App);
+appInstance.use(router);
+appInstance.use(ArgonDashboard);
+appInstance.mount("#app");
