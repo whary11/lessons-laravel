@@ -27,16 +27,30 @@ const routes =  [
 
   {
     path: "/gateway/auth",
-    redirect: { name: 'login' },
+    // redirect: { name: 'login' },
     component: AuthLayout,
+    
+    
     children: [
       {
         path: "/gateway/login",
         name: "login",
+        // redirect:  to => {
+        //   let token = localStorage.getItem('token')
+
+        //   if (token) {
+        //     return {name:'dashboard'}
+        //   }
+
+        //   return {name:'login'}
+        // },
         components: {
           default: Login
         },
+        
       },
+
+      
       {
         path: "/gateway/register",
         name: "register",
@@ -51,9 +65,25 @@ const routes =  [
 
 const router = createRouter({
   history: createWebHistory(),
-  // linkActiveClass: "active",
+  linkActiveClass: "active",
   routes,
 });
+
+
+router.beforeEach((to, from, next) => {
+
+  let token = localStorage.getItem('token')
+  console.log(to.name);
+  if ((to.name == 'login' || to.name == 'register') && (token && token != 'undefined')) {
+    next({name:'dashboard'});
+  }
+
+  if ((to.name == 'dashboard') && (!token || token == 'undefined')) {
+    next({name:'login'});
+  }
+  next()
+ 
+})
 
 
 export default router;

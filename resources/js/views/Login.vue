@@ -30,7 +30,7 @@
               formClasses="input-group-alternative mb-3"
               placeholder="Email"
               addon-left-icon="ni ni-email-83"
-              v-model="model.email"
+              @input="(value) =>  setValue('email', value)"
             >
             </base-input>
 
@@ -39,15 +39,16 @@
               placeholder="Password"
               type="password"
               addon-left-icon="ni ni-lock-circle-open"
-              v-model="model.password"
+              @input="(value) =>  setValue('password', value)"
             >
             </base-input>
+            <span>{{model}}</span>
 
             <base-checkbox class="custom-control-alternative">
               <span class="text-muted">Remember me</span>
             </base-checkbox>
             <div class="text-center">
-              <base-button type="primary" class="my-4">Sign in</base-button>
+              <base-button type="primary" class="my-4" @click="login()">Sign in</base-button>
             </div>
           </form>
         </div>
@@ -57,7 +58,7 @@
           <a href="#" class="text-light"><small>Forgot password?</small></a>
         </div>
         <div class="col-6 text-right">
-          <router-link to="/register" class="text-light"
+          <router-link :to="{name:'register'}" class="text-light"
             ><small>Create new account</small></router-link
           >
         </div>
@@ -76,6 +77,38 @@ export default {
       },
     };
   },
+  methods: {
+    async login(){
+      this.post('/api/authentication/login', this.model)
+        .then(resp => {
+          localStorage.setItem('token', resp.data.token)
+          this.$router.push({name:'dashboard'})
+        }) 
+    },
+    setValue(type, evt){
+      let value = evt.target.value;
+      this.model[type] = value
+    },
+   
+    async  post(url = '', data = {}) {
+  // Opciones por defecto estan marcadas con un *
+        const response = await fetch(url, {
+          method: 'POST', // *GET, POST, PUT, DELETE, etc.
+          mode: 'cors', // no-cors, *cors, same-origin
+          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+          credentials: 'same-origin', // include, *same-origin, omit
+          headers: {
+            'Content-Type': 'application/json'
+            // 'Content-Type': 'application/x-www-form-urlencoded',
+          },
+          redirect: 'follow', // manual, *follow, error
+          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
+          body: JSON.stringify(data) // body data type must match "Content-Type" header
+        });
+        return response.json(); // parses JSON response into native JavaScript objects
+      }
+    }
+  
 };
 </script>
 <style></style>

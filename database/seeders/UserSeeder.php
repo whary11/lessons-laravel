@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
              ],
              [
                 'name'           => 'Argon',
-                'email'          => ' admin@argon.com',
+                'email'          => 'admin@argon.com',
                 'password'       => bcrypt('secret'),
                 'remember_token' => null,
             ]

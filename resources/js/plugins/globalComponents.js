@@ -1,7 +1,7 @@
 // import Badge from "../components/Badge";
 // import BaseAlert from "../components/BaseAlert";
 import BaseButton from "../components/BaseButton";
-// import BaseCheckbox from "../components/BaseCheckbox";
+import BaseCheckbox from "../components/BaseCheckbox";
 import BaseDropdown from "../components/BaseDropdown";
 import BaseHeader from "../components/BaseHeader";
 import BaseInput from "../components/BaseInput";
@@ -24,7 +24,7 @@ const GlobalComponents = {
     // app.component("badge", Badge);
     // app.component("base-alert", BaseAlert);
     app.component("base-button", BaseButton);
-    // app.component("base-checkbox", BaseCheckbox);
+    app.component("base-checkbox", BaseCheckbox);
     app.component("base-dropdown", BaseDropdown);
     app.component("base-header", BaseHeader);
     app.component("base-input", BaseInput);
