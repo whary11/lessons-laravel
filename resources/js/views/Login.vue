@@ -23,7 +23,10 @@
         </div>
         <div class="card-body px-lg-5 py-lg-5">
           <div class="text-center text-muted mb-4">
-            <small>Or sign in with credentials</small>
+            <p class="text-center text-danger" v-for="(item, key) in errors" :key="key">
+              {{ item }}
+            </p>
+            <!-- <small >Or sign in with credentials</small> -->
           </div>
           <form role="form">
             <base-input
@@ -42,7 +45,6 @@
               @input="(value) =>  setValue('password', value)"
             >
             </base-input>
-            <span>{{model}}</span>
 
             <base-checkbox class="custom-control-alternative">
               <span class="text-muted">Remember me</span>
@@ -67,6 +69,7 @@
   </div>
 </template>
 <script>
+import { forIn } from 'lodash';
 export default {
   name: "login",
   data() {
@@ -75,38 +78,41 @@ export default {
         email: "",
         password: "",
       },
+
+      errors: []
     };
   },
   methods: {
     async login(){
-      this.post('/api/authentication/login', this.model)
+      this.errors = []
+      axios.post('/api/authentication/login', this.model)
         .then(resp => {
           localStorage.setItem('token', resp.data.token)
           this.$router.push({name:'dashboard'})
-        }) 
+        }).catch(err => {
+          console.log(err.response);
+
+          
+
+          if (err.response.status == 422) {
+            for (const key in err.response.data.data) {
+              
+              err.response.data.data[key].map(e => {
+                
+                this.errors.push(e)
+              })
+            }
+          }
+
+          console.log(this.errors);
+        })
     },
     setValue(type, evt){
       let value = evt.target.value;
       this.model[type] = value
     },
    
-    async  post(url = '', data = {}) {
-  // Opciones por defecto estan marcadas con un *
-        const response = await fetch(url, {
-          method: 'POST', // *GET, POST, PUT, DELETE, etc.
-          mode: 'cors', // no-cors, *cors, same-origin
-          cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-          credentials: 'same-origin', // include, *same-origin, omit
-          headers: {
-            'Content-Type': 'application/json'
-            // 'Content-Type': 'application/x-www-form-urlencoded',
-          },
-          redirect: 'follow', // manual, *follow, error
-          referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-          body: JSON.stringify(data) // body data type must match "Content-Type" header
-        });
-        return response.json(); // parses JSON response into native JavaScript objects
-      }
+    
     }
   
 };
